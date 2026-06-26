@@ -15,6 +15,33 @@ import {
 import heroImage from './assets/dinner-cards-hero.png';
 import './styles.css';
 
+const foodImages = {
+  luosifen: new URL('./assets/foods/luosifen.png', import.meta.url).href,
+  'bbq-rice': new URL('./assets/foods/bbq-rice.png', import.meta.url).href,
+  'charcoal-bbq': new URL('./assets/foods/charcoal-bbq.png', import.meta.url).href,
+  'sauerkraut-fish': new URL('./assets/foods/sauerkraut-fish.png', import.meta.url).href,
+  'fried-skewers': new URL('./assets/foods/fried-skewers.png', import.meta.url).href,
+  'xinjiang-rice-noodles': new URL('./assets/foods/xinjiang-rice-noodles.png', import.meta.url).href,
+  burrito: new URL('./assets/foods/burrito.png', import.meta.url).href,
+  'curry-omurice': new URL('./assets/foods/curry-omurice.png', import.meta.url).href,
+  'grilled-fish': new URL('./assets/foods/grilled-fish.png', import.meta.url).href,
+  oden: new URL('./assets/foods/oden.png', import.meta.url).href,
+  'sweet-tea-cake': new URL('./assets/foods/sweet-tea-cake.png', import.meta.url).href,
+  'roast-meat-rice': new URL('./assets/foods/roast-meat-rice.png', import.meta.url).href,
+  'butter-chicken-rice': new URL('./assets/foods/butter-chicken-rice.png', import.meta.url).href,
+  'shawarma-wrap': new URL('./assets/foods/shawarma-wrap.png', import.meta.url).href,
+  'beef-pho': new URL('./assets/foods/beef-pho.png', import.meta.url).href,
+  'banh-mi': new URL('./assets/foods/banh-mi.png', import.meta.url).href,
+  'greek-pita': new URL('./assets/foods/greek-pita.png', import.meta.url).href,
+  'doner-rice': new URL('./assets/foods/doner-rice.png', import.meta.url).href,
+  'yunnan-rice-noodles': new URL('./assets/foods/yunnan-rice-noodles.png', import.meta.url).href,
+  'roujiamo-liangpi': new URL('./assets/foods/roujiamo-liangpi.png', import.meta.url).href,
+  'chaoshan-beef-kway-teow': new URL('./assets/foods/chaoshan-beef-kway-teow.png', import.meta.url).href,
+  'northeast-dumplings': new URL('./assets/foods/northeast-dumplings.png', import.meta.url).href,
+  'veggie-quinoa-tofu': new URL('./assets/foods/veggie-quinoa-tofu.png', import.meta.url).href,
+  'seafood-paella': new URL('./assets/foods/seafood-paella.png', import.meta.url).href,
+};
+
 const dinnerOptions = [
   {
     id: 'hotpot',
@@ -66,7 +93,7 @@ const dinnerOptions = [
     budget: 'high',
     moods: ['fresh', 'reward', 'quiet'],
     flavors: ['fresh', 'light'],
-    groupSizes: ['solo', 'couple'],
+    groupSizes: ['solo', 'couple', 'group'],
     hungerLevel: 'normal',
     reason: '清爽、有仪式感，不会把晚餐吃成一场战斗。',
     tips: '很饿就搭配乌冬或茶碗蒸，单吃寿司可能后半夜想加餐。',
@@ -184,6 +211,342 @@ const dinnerOptions = [
     tips: '选一个经典口味加一个清爽小食，比全肉披萨更耐吃。',
     image: '🍕',
   },
+  {
+    id: 'luosifen',
+    name: '螺蛳粉加料碗',
+    category: '螺蛳粉',
+    scene: 'delivery',
+    budget: 'low',
+    moods: ['spicy', 'reward', 'lazy'],
+    flavors: ['spicy', 'savory'],
+    groupSizes: ['solo'],
+    hungerLevel: 'very',
+    reason: '酸辣重口味很有存在感，适合想吃点有记忆点的晚上。',
+    tips: '加腐竹和青菜就够完整，怕太冲可以备注少酸笋或另放辣油。',
+    image: foodImages.luosifen,
+  },
+  {
+    id: 'bbq-rice',
+    name: '烤肉拌饭',
+    category: '拌饭',
+    scene: 'delivery',
+    budget: 'low',
+    moods: ['comfort', 'lazy', 'spicy'],
+    flavors: ['savory', 'spicy'],
+    groupSizes: ['solo'],
+    hungerLevel: 'very',
+    reason: '肉、饭、酱一起解决，顶饿又不需要复杂选择。',
+    tips: '多加一份蔬菜或海苔碎，酱汁分装会更不腻。',
+    image: foodImages['bbq-rice'],
+  },
+  {
+    id: 'charcoal-bbq',
+    name: '炭火烤肉局',
+    category: '烤肉',
+    scene: 'dine-in',
+    budget: 'high',
+    moods: ['reward', 'social', 'comfort'],
+    flavors: ['savory', 'sweet'],
+    groupSizes: ['couple', 'group'],
+    hungerLevel: 'very',
+    reason: '适合认真吃一顿，也适合把晚餐变成小聚会。',
+    tips: '先点拼盘再补单品，配生菜和泡菜会比全程吃肉更舒服。',
+    image: foodImages['charcoal-bbq'],
+  },
+  {
+    id: 'sauerkraut-fish',
+    name: '酸菜鱼双人锅',
+    category: '酸菜鱼',
+    scene: 'both',
+    budget: 'medium',
+    moods: ['fresh', 'spicy', 'social'],
+    flavors: ['fresh', 'spicy', 'savory'],
+    groupSizes: ['couple', 'group'],
+    hungerLevel: 'normal',
+    reason: '酸爽开胃，比火锅轻一点，但共享感还在。',
+    tips: '两个人选小份鱼加一份粉，外卖备注鱼片和汤分开更稳。',
+    image: foodImages['sauerkraut-fish'],
+  },
+  {
+    id: 'fried-skewers',
+    name: '炸串小食盒',
+    category: '炸串',
+    scene: 'delivery',
+    budget: 'low',
+    moods: ['reward', 'lazy', 'social'],
+    flavors: ['savory', 'spicy'],
+    groupSizes: ['solo', 'couple', 'group'],
+    hungerLevel: 'normal',
+    reason: '快乐来得很快，适合不想吃正餐但又想有点仪式感。',
+    tips: '荤素各半，再加一份主食或饮料，别只点淀粉串。',
+    image: foodImages['fried-skewers'],
+  },
+  {
+    id: 'xinjiang-rice-noodles',
+    name: '新疆炒米粉',
+    category: '炒米粉',
+    scene: 'delivery',
+    budget: 'low',
+    moods: ['spicy', 'reward', 'comfort'],
+    flavors: ['spicy', 'savory'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'very',
+    reason: '酱香和辣度都很直接，适合很饿又想吃重口的一餐。',
+    tips: '第一次点选中辣更稳，加鸡肉或牛肉比单加米粉更满足。',
+    image: foodImages['xinjiang-rice-noodles'],
+  },
+  {
+    id: 'burrito',
+    name: '墨西哥卷饼',
+    category: '卷饼',
+    scene: 'delivery',
+    budget: 'medium',
+    moods: ['fresh', 'lazy', 'reward'],
+    flavors: ['fresh', 'savory'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '拿起来就能吃，蔬菜、肉和酱料都在一个卷里。',
+    tips: '选鸡肉或牛肉基底，酱料少一点，外卖路上不容易塌。',
+    image: foodImages.burrito,
+  },
+  {
+    id: 'curry-omurice',
+    name: '咖喱蛋包饭',
+    category: '咖喱饭',
+    scene: 'both',
+    budget: 'medium',
+    moods: ['comfort', 'reward', 'quiet'],
+    flavors: ['savory', 'sweet'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '软乎乎、热乎乎，适合想要一点安慰感的晚餐。',
+    tips: '选猪排或鸡排会更顶饿，咖喱酱不够可以备注多一点。',
+    image: foodImages['curry-omurice'],
+  },
+  {
+    id: 'grilled-fish',
+    name: '烤鱼小锅',
+    category: '烤鱼',
+    scene: 'dine-in',
+    budget: 'high',
+    moods: ['spicy', 'social', 'reward'],
+    flavors: ['spicy', 'savory'],
+    groupSizes: ['couple', 'group'],
+    hungerLevel: 'very',
+    reason: '有锅气、有配菜、有分享感，适合不想吃火锅但想热闹一点。',
+    tips: '两三个人点一条鱼加豆皮、土豆和青菜，主食最后再看胃口。',
+    image: foodImages['grilled-fish'],
+  },
+  {
+    id: 'oden',
+    name: '关东煮便利餐',
+    category: '关东煮',
+    scene: 'both',
+    budget: 'low',
+    moods: ['comfort', 'quiet', 'lazy'],
+    flavors: ['light', 'savory'],
+    groupSizes: ['solo'],
+    hungerLevel: 'light',
+    reason: '热汤和小份量很友好，适合想轻轻吃但不想只喝粥。',
+    tips: '豆腐、萝卜、蛋白类各选一点，再配饭团会更像一餐。',
+    image: foodImages.oden,
+  },
+  {
+    id: 'sweet-tea-cake',
+    name: '奶茶甜品轻晚餐',
+    category: '甜品饮品',
+    scene: 'delivery',
+    budget: 'medium',
+    moods: ['reward', 'lazy', 'quiet'],
+    flavors: ['sweet', 'fresh'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'light',
+    reason: '不算正经大餐，但很适合只想给今天一点甜头的夜晚。',
+    tips: '奶茶选半糖，再配三明治或小蛋糕，别让晚饭只剩一杯糖。',
+    image: foodImages['sweet-tea-cake'],
+  },
+  {
+    id: 'roast-meat-rice',
+    name: '粤式烧腊饭',
+    category: '烧腊',
+    scene: 'both',
+    budget: 'medium',
+    moods: ['comfort', 'lazy', 'reward'],
+    flavors: ['savory', 'sweet'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '烧鸭、叉烧和米饭的组合稳定可靠，适合想吃香一点但不想冒险。',
+    tips: '双拼比单拼更有层次，加青菜和例汤就是完整晚餐。',
+    image: foodImages['roast-meat-rice'],
+  },
+  {
+    id: 'butter-chicken-rice',
+    name: '印度黄油鸡饭',
+    category: '印度菜',
+    scene: 'both',
+    budget: 'medium',
+    moods: ['comfort', 'reward', 'quiet'],
+    flavors: ['savory', 'sweet'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '奶香咖喱和米饭很有安慰感，适合想换个香料频道的晚上。',
+    tips: '搭配烤饼或一份蔬菜，酱汁多一点会更适合拌饭。',
+    image: foodImages['butter-chicken-rice'],
+  },
+  {
+    id: 'shawarma-wrap',
+    name: '中东沙威玛卷',
+    category: '中东风味',
+    scene: 'delivery',
+    budget: 'medium',
+    moods: ['fresh', 'lazy', 'reward'],
+    flavors: ['fresh', 'savory'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '烤肉、蔬菜和酸奶酱包在一起，清爽但不会空虚。',
+    tips: '酱料另放更稳，想更顶饿可以加薯角或鹰嘴豆泥。',
+    image: foodImages['shawarma-wrap'],
+  },
+  {
+    id: 'beef-pho',
+    name: '越南牛肉河粉',
+    category: '越南菜',
+    scene: 'both',
+    budget: 'medium',
+    moods: ['fresh', 'comfort', 'quiet'],
+    flavors: ['fresh', 'light'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '汤底清亮、香草提神，适合想吃热乎但不想太重的晚餐。',
+    tips: '外卖备注汤粉分装，挤点青柠会更醒胃。',
+    image: foodImages['beef-pho'],
+  },
+  {
+    id: 'banh-mi',
+    name: '越南法棍三明治',
+    category: '越南菜',
+    scene: 'delivery',
+    budget: 'low',
+    moods: ['fresh', 'lazy', 'quiet'],
+    flavors: ['fresh', 'savory'],
+    groupSizes: ['solo'],
+    hungerLevel: 'light',
+    reason: '脆面包、腌菜和肉馅很利落，适合不想吃太满的一餐。',
+    tips: '选鸡肉或牛肉馅，怕晚点饿就加一杯汤或小食。',
+    image: foodImages['banh-mi'],
+  },
+  {
+    id: 'greek-pita',
+    name: '希腊烤肉皮塔',
+    category: '地中海菜',
+    scene: 'both',
+    budget: 'medium',
+    moods: ['fresh', 'social', 'reward'],
+    flavors: ['fresh', 'savory'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '烤肉、蔬菜和酸奶酱很平衡，清爽又有满足感。',
+    tips: '配沙拉或烤蔬菜，比单点肉卷更像一顿完整晚餐。',
+    image: foodImages['greek-pita'],
+  },
+  {
+    id: 'doner-rice',
+    name: '土耳其烤肉饭',
+    category: '土耳其菜',
+    scene: 'delivery',
+    budget: 'medium',
+    moods: ['comfort', 'lazy', 'reward'],
+    flavors: ['savory', 'spicy'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'very',
+    reason: '烤肉和米饭的组合直接顶饿，适合不想复杂点菜的时候。',
+    tips: '加蔬菜和酸奶酱能解腻，辣酱单独放更好控。',
+    image: foodImages['doner-rice'],
+  },
+  {
+    id: 'yunnan-rice-noodles',
+    name: '云南过桥米线',
+    category: '云南菜',
+    scene: 'dine-in',
+    budget: 'medium',
+    moods: ['comfort', 'fresh', 'quiet'],
+    flavors: ['light', 'fresh'],
+    groupSizes: ['solo', 'couple', 'group'],
+    hungerLevel: 'normal',
+    reason: '汤、米线和小料分层上桌，温和又有一点仪式感。',
+    tips: '堂食体验更好，先下肉片再下蔬菜和米线。',
+    image: foodImages['yunnan-rice-noodles'],
+  },
+  {
+    id: 'roujiamo-liangpi',
+    name: '陕西肉夹馍凉皮组',
+    category: '陕西小吃',
+    scene: 'both',
+    budget: 'low',
+    moods: ['fresh', 'comfort', 'lazy'],
+    flavors: ['fresh', 'savory'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'normal',
+    reason: '一个扎实一个清爽，组合起来比单点主食更有层次。',
+    tips: '凉皮少辣多醋更开胃，肉夹馍趁热吃口感最好。',
+    image: foodImages['roujiamo-liangpi'],
+  },
+  {
+    id: 'chaoshan-beef-kway-teow',
+    name: '潮汕牛肉粿条',
+    category: '潮汕菜',
+    scene: 'dine-in',
+    budget: 'medium',
+    moods: ['comfort', 'fresh', 'quiet'],
+    flavors: ['fresh', 'light'],
+    groupSizes: ['solo', 'couple', 'group'],
+    hungerLevel: 'normal',
+    reason: '牛肉鲜、汤底清，适合想认真吃但不想重油重辣的时候。',
+    tips: '堂食点现切牛肉更稳，配沙茶酱但别盖过汤味。',
+    image: foodImages['chaoshan-beef-kway-teow'],
+  },
+  {
+    id: 'northeast-dumplings',
+    name: '东北饺子小菜',
+    category: '东北菜',
+    scene: 'both',
+    budget: 'low',
+    moods: ['comfort', 'social', 'quiet'],
+    flavors: ['savory', 'light'],
+    groupSizes: ['solo', 'couple', 'group'],
+    hungerLevel: 'normal',
+    reason: '热饺子和小凉菜很有家常感，一个人或多人都不尴尬。',
+    tips: '点一份酸辣小菜配饺子，外卖记得要醋和蒜泥。',
+    image: foodImages['northeast-dumplings'],
+  },
+  {
+    id: 'veggie-quinoa-tofu',
+    name: '素食藜麦豆腐碗',
+    category: '素食轻食',
+    scene: 'delivery',
+    budget: 'medium',
+    moods: ['fresh', 'quiet', 'lazy'],
+    flavors: ['fresh', 'light'],
+    groupSizes: ['solo', 'couple'],
+    hungerLevel: 'light',
+    reason: '有蛋白、有谷物、有蔬菜，适合想轻负担但不想只吃草。',
+    tips: '酱汁单独放，豆腐或鹰嘴豆加量会更抗饿。',
+    image: foodImages['veggie-quinoa-tofu'],
+  },
+  {
+    id: 'seafood-paella',
+    name: '西班牙海鲜饭',
+    category: '西班牙菜',
+    scene: 'dine-in',
+    budget: 'high',
+    moods: ['reward', 'social', 'fresh'],
+    flavors: ['fresh', 'savory'],
+    groupSizes: ['couple', 'group'],
+    hungerLevel: 'normal',
+    reason: '海鲜和米饭很有分享感，适合把普通晚餐升级一下。',
+    tips: '两个人以上点更划算，配一份沙拉或烤蔬菜会更清爽。',
+    image: foodImages['seafood-paella'],
+  },
 ];
 
 const filters = {
@@ -268,7 +631,26 @@ const sceneLabels = {
   both: '外卖/堂食都行',
 };
 
-function scoreOption(option, selections, shuffleSeed) {
+function isImageAsset(image) {
+  return typeof image === 'string' && image.includes('/assets/');
+}
+
+const diverseOptionIds = new Set([
+  'butter-chicken-rice',
+  'shawarma-wrap',
+  'beef-pho',
+  'banh-mi',
+  'greek-pita',
+  'doner-rice',
+  'yunnan-rice-noodles',
+  'roujiamo-liangpi',
+  'chaoshan-beef-kway-teow',
+  'northeast-dumplings',
+  'veggie-quinoa-tofu',
+  'seafood-paella',
+]);
+
+function getMatchScore(option, selections) {
   let score = 0;
 
   if (selections.mood && option.moods.includes(selections.mood)) score += 4;
@@ -282,7 +664,7 @@ function scoreOption(option, selections, shuffleSeed) {
     score += option.id === 'malatang' || option.id === 'home-style' || option.id === 'thai' ? 2 : 0;
   }
 
-  return score + seededNoise(option.id, shuffleSeed);
+  return score;
 }
 
 function seededNoise(text, seed) {
@@ -295,11 +677,27 @@ function seededNoise(text, seed) {
 
 function getRecommendations(selections, shuffleSeed) {
   const activeCount = Object.values(selections).filter(Boolean).length;
+  const scoredOptions = dinnerOptions.map((option) => ({
+    ...option,
+    matchScore: getMatchScore(option, selections),
+    noise: seededNoise(option.id, shuffleSeed),
+  }));
+  const maxMatchScore = Math.max(...scoredOptions.map((option) => option.matchScore));
   const ranked = [...dinnerOptions]
-    .map((option) => ({
-      ...option,
-      score: scoreOption(option, selections, shuffleSeed),
-    }))
+    .map((option) => {
+      const scoredOption = scoredOptions.find((candidate) => candidate.id === option.id);
+      const diversityBoost =
+        activeCount &&
+        scoredOption.matchScore === maxMatchScore &&
+        diverseOptionIds.has(option.id)
+          ? 1.85
+          : 0;
+
+      return {
+        ...option,
+        score: scoredOption.matchScore + scoredOption.noise + diversityBoost,
+      };
+    })
     .sort((a, b) => b.score - a.score);
 
   const candidatePool = ranked.slice(0, 8);
@@ -429,7 +827,7 @@ function App() {
                   <span className="scene-badge">{sceneLabels[option.scene]}</span>
                 </div>
                 <div className="food-visual" aria-hidden="true">
-                  {option.image}
+                  {isImageAsset(option.image) ? <img src={option.image} alt="" /> : option.image}
                 </div>
                 <h3>{option.name}</h3>
                 <p className="category">{option.category}</p>
