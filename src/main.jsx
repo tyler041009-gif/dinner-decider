@@ -16,6 +16,18 @@ import heroImage from './assets/dinner-cards-hero.png';
 import './styles.css';
 
 const foodImages = {
+  hotpot: new URL('./assets/foods/hotpot.png', import.meta.url).href,
+  malatang: new URL('./assets/foods/malatang.png', import.meta.url).href,
+  bbq: new URL('./assets/foods/bbq.png', import.meta.url).href,
+  sushi: new URL('./assets/foods/sushi.png', import.meta.url).href,
+  korean: new URL('./assets/foods/korean.png', import.meta.url).href,
+  noodles: new URL('./assets/foods/noodles.png', import.meta.url).href,
+  salad: new URL('./assets/foods/salad.png', import.meta.url).href,
+  burger: new URL('./assets/foods/burger.png', import.meta.url).href,
+  'home-style': new URL('./assets/foods/home-style.png', import.meta.url).href,
+  thai: new URL('./assets/foods/thai.png', import.meta.url).href,
+  congee: new URL('./assets/foods/congee.png', import.meta.url).href,
+  pizza: new URL('./assets/foods/pizza.png', import.meta.url).href,
   luosifen: new URL('./assets/foods/luosifen.png', import.meta.url).href,
   'bbq-rice': new URL('./assets/foods/bbq-rice.png', import.meta.url).href,
   'charcoal-bbq': new URL('./assets/foods/charcoal-bbq.png', import.meta.url).href,
@@ -55,7 +67,7 @@ const dinnerOptions = [
     hungerLevel: 'very',
     reason: '热气和蘸料能迅速把晚上的犹豫清空，特别适合多人一起吃。',
     tips: '选鸳鸯锅，点一份蔬菜拼盘和主食，别让预算在肥牛上失控。',
-    image: '🍲',
+    image: foodImages.hotpot,
   },
   {
     id: 'malatang',
@@ -69,7 +81,7 @@ const dinnerOptions = [
     hungerLevel: 'very',
     reason: '自由度高、出餐快，想吃重口味但不想认真点菜时很稳。',
     tips: '先选蛋白和绿叶菜，再加一份粉面，汤底选微辣更不容易翻车。',
-    image: '🥘',
+    image: foodImages.malatang,
   },
   {
     id: 'bbq',
@@ -83,7 +95,7 @@ const dinnerOptions = [
     hungerLevel: 'normal',
     reason: '适合边吃边聊天，碳烤香气会让普通晚上变得像小聚会。',
     tips: '点肉串、烤蔬菜和一份主食，外卖备注少油少盐会舒服很多。',
-    image: '🍢',
+    image: foodImages.bbq,
   },
   {
     id: 'sushi',
@@ -97,7 +109,7 @@ const dinnerOptions = [
     hungerLevel: 'normal',
     reason: '清爽、有仪式感，不会把晚餐吃成一场战斗。',
     tips: '很饿就搭配乌冬或茶碗蒸，单吃寿司可能后半夜想加餐。',
-    image: '🍣',
+    image: foodImages.sushi,
   },
   {
     id: 'korean',
@@ -111,7 +123,7 @@ const dinnerOptions = [
     hungerLevel: 'very',
     reason: '拌饭负责踏实，炸鸡负责快乐，适合需要一点奖励的晚上。',
     tips: '两个人点半份炸鸡加一份拌饭，快乐和负担都刚刚好。',
-    image: '🍗',
+    image: foodImages.korean,
   },
   {
     id: 'noodles',
@@ -125,7 +137,7 @@ const dinnerOptions = [
     hungerLevel: 'normal',
     reason: '快、暖、稳定，是不想冒险时的晚餐保险牌。',
     tips: '加蛋或牛肉比盲目加大份更划算，汤粉外卖记得备注汤面分装。',
-    image: '🍜',
+    image: foodImages.noodles,
   },
   {
     id: 'salad',
@@ -139,7 +151,7 @@ const dinnerOptions = [
     hungerLevel: 'light',
     reason: '适合想吃干净一点、又不想真的做饭的夜晚。',
     tips: '优先选鸡胸、牛肉或豆腐这类蛋白，酱汁单独放更好控制味道。',
-    image: '🥗',
+    image: foodImages.salad,
   },
   {
     id: 'burger',
@@ -153,7 +165,7 @@ const dinnerOptions = [
     hungerLevel: 'very',
     reason: '不用思考、满足感强，适合今天脑力已经见底的时候。',
     tips: '换无糖饮料或少点一份薯条，快乐不会少太多。',
-    image: '🍔',
+    image: foodImages.burger,
   },
   {
     id: 'home-style',
@@ -167,7 +179,7 @@ const dinnerOptions = [
     hungerLevel: 'normal',
     reason: '像认真吃了一顿饭，但决策成本很低。',
     tips: '一荤一素配米饭最稳，堂食可以看看今日例汤。',
-    image: '🍛',
+    image: foodImages['home-style'],
   },
   {
     id: 'thai',
@@ -181,7 +193,7 @@ const dinnerOptions = [
     hungerLevel: 'normal',
     reason: '酸辣和香草味会把味觉叫醒，适合想换个频道的晚上。',
     tips: '冬阴功、炒河粉和青木瓜沙拉三选二，就很有完成度。',
-    image: '🍤',
+    image: foodImages.thai,
   },
   {
     id: 'congee',
@@ -195,7 +207,7 @@ const dinnerOptions = [
     hungerLevel: 'light',
     reason: '温和、不刺激，适合加班后或者胃口不太野的晚上。',
     tips: '配蒸点和青菜，堂食比外卖口感更好。',
-    image: '🥣',
+    image: foodImages.congee,
   },
   {
     id: 'pizza',
@@ -209,7 +221,7 @@ const dinnerOptions = [
     hungerLevel: 'very',
     reason: '适合多人分食，也适合边看剧边解决晚饭。',
     tips: '选一个经典口味加一个清爽小食，比全肉披萨更耐吃。',
-    image: '🍕',
+    image: foodImages.pizza,
   },
   {
     id: 'luosifen',
