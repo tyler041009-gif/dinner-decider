@@ -868,5 +868,29 @@
     "reason": "海鲜和米饭很有分享感，适合把普通晚餐升级一下。",
     "tips": "两个人以上点更划算，配一份沙拉或烤蔬菜会更清爽。",
     "image": "seafood-paella"
+  },
+  {
+    "id": "roasted-fish",
+    "name": "烤鱼",
+    "category": "烤鱼",
+    "scene": "dine-in",
+    "budget": "high",
+    "moods": [
+      "spicy",
+      "social",
+      "reward"
+    ],
+    "flavors": [
+      "spicy",
+      "savory"
+    ],
+    "groupSizes": [
+      "couple",
+      "group"
+    ],
+    "hungerLevel": "very",
+    "reason": "一整条鱼加配菜很有存在感，适合想吃热闹、重口、能分享的一顿。",
+    "tips": "选香辣或蒜香口味更稳，配豆皮、土豆和青菜，主食最后再加。",
+    "image": "grilled-fish"
   }
 ]
