@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Banknote,
@@ -13,7 +13,7 @@ import {
   Users,
 } from 'lucide-react';
 import heroImage from './assets/dinner-cards-hero.png';
-import dinnerOptionsData from './data/dinnerOptions.json';
+import { loadDinnerOptions } from './lib/dinnerOptions';
 import './styles.css';
 
 const foodImages = {
@@ -55,10 +55,12 @@ const foodImages = {
   'seafood-paella': new URL('./assets/foods/seafood-paella.png', import.meta.url).href,
 };
 
-const dinnerOptions = dinnerOptionsData.map((option) => ({
-  ...option,
-  image: foodImages[option.image] ?? option.image,
-}));
+function hydrateDinnerOptions(options) {
+  return options.map((option) => ({
+    ...option,
+    image: foodImages[option.image] ?? option.image,
+  }));
+}
 
 const filters = {
   mood: {
@@ -186,15 +188,17 @@ function seededNoise(text, seed) {
   return (hash / 997) * 2.4;
 }
 
-function getRecommendations(selections, shuffleSeed) {
+function getRecommendations(options, selections, shuffleSeed) {
+  if (!options.length) return [];
+
   const activeCount = Object.values(selections).filter(Boolean).length;
-  const scoredOptions = dinnerOptions.map((option) => ({
+  const scoredOptions = options.map((option) => ({
     ...option,
     matchScore: getMatchScore(option, selections),
     noise: seededNoise(option.id, shuffleSeed),
   }));
   const maxMatchScore = Math.max(...scoredOptions.map((option) => option.matchScore));
-  const ranked = [...dinnerOptions]
+  const ranked = [...options]
     .map((option) => {
       const scoredOption = scoredOptions.find((candidate) => candidate.id === option.id);
       const diversityBoost =
@@ -236,12 +240,28 @@ function getRecommendations(selections, shuffleSeed) {
 function App() {
   const [selections, setSelections] = useState(defaultSelections);
   const [shuffleSeed, setShuffleSeed] = useState(7);
+  const [dinnerOptions, setDinnerOptions] = useState([]);
+  const [dataSource, setDataSource] = useState('loading');
   const recommendations = useMemo(
-    () => getRecommendations(selections, shuffleSeed),
-    [selections, shuffleSeed],
+    () => getRecommendations(dinnerOptions, selections, shuffleSeed),
+    [dinnerOptions, selections, shuffleSeed],
   );
 
   const activeCount = Object.values(selections).filter(Boolean).length;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    loadDinnerOptions().then(({ options, source }) => {
+      if (!isMounted) return;
+      setDinnerOptions(hydrateDinnerOptions(options));
+      setDataSource(source);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   function chooseFilter(group, value) {
     setSelections((current) => ({
@@ -327,7 +347,11 @@ function App() {
 
           <div className="status-strip">
             <Star size={16} />
-            {activeCount ? `已根据 ${activeCount} 个偏好推荐` : '未选择也可以，先给你默认灵感'}
+            {dataSource === 'loading'
+              ? '正在加载晚餐数据'
+              : activeCount
+                ? `已根据 ${activeCount} 个偏好推荐`
+                : '未选择也可以，先给你默认灵感'}
           </div>
 
           <div className="recommendation-grid">
