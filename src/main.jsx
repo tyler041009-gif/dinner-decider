@@ -3,9 +3,13 @@ import { createRoot } from 'react-dom/client';
 import {
   Banknote,
   ChefHat,
+  X,
+  LogIn,
+  LogOut,
   Flame,
   Heart,
   MapPin,
+  Save,
   RefreshCw,
   Sparkles,
   Star,
@@ -13,7 +17,16 @@ import {
   Users,
 } from 'lucide-react';
 import heroImage from './assets/dinner-cards-hero.png';
+import {
+  getCurrentUser,
+  listenToAuthChanges,
+  loadUserPreferences,
+  saveUserPreferences,
+  sendLoginLink,
+  signOut,
+} from './lib/auth';
 import { loadDinnerOptions } from './lib/dinnerOptions';
+import { isSupabaseConfigured } from './lib/supabase';
 import './styles.css';
 
 const foodImages = {
@@ -142,6 +155,14 @@ const defaultSelections = {
   flavor: '',
 };
 
+function normalizeSelections(savedSelections) {
+  return Object.keys(defaultSelections).reduce((nextSelections, key) => {
+    nextSelections[key] =
+      typeof savedSelections?.[key] === 'string' ? savedSelections[key] : defaultSelections[key];
+    return nextSelections;
+  }, {});
+}
+
 const budgetLabels = {
   low: '低预算',
   medium: '中预算',
@@ -262,6 +283,13 @@ function App() {
   const [shuffleSeed, setShuffleSeed] = useState(7);
   const [dinnerOptions, setDinnerOptions] = useState([]);
   const [dataSource, setDataSource] = useState('loading');
+  const [user, setUser] = useState(null);
+  const [authPanelOpen, setAuthPanelOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [authStatus, setAuthStatus] = useState('');
+  const [authBusy, setAuthBusy] = useState(false);
+  const [preferenceStatus, setPreferenceStatus] = useState('');
+  const [preferenceBusy, setPreferenceBusy] = useState(false);
   const recommendations = useMemo(
     () => getRecommendations(dinnerOptions, selections, shuffleSeed),
     [dinnerOptions, selections, shuffleSeed],
@@ -283,6 +311,57 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    getCurrentUser().then((currentUser) => {
+      if (!isMounted) return;
+      setUser(currentUser);
+    });
+
+    const unsubscribe = listenToAuthChanges((currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        setAuthPanelOpen(false);
+        setAuthStatus('');
+      } else {
+        setPreferenceStatus('');
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+
+    let isMounted = true;
+    setPreferenceStatus('正在读取你的偏好...');
+
+    loadUserPreferences(user.id)
+      .then((savedSelections) => {
+        if (!isMounted) return;
+
+        if (savedSelections) {
+          setSelections(normalizeSelections(savedSelections));
+          setPreferenceStatus('已恢复你上次保存的偏好。');
+        } else {
+          setPreferenceStatus('登录成功，当前还没有保存过偏好。');
+        }
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setPreferenceStatus('偏好读取失败，先用当前选择也可以。');
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
+
   function chooseFilter(group, value) {
     setSelections((current) => ({
       ...current,
@@ -299,8 +378,88 @@ function App() {
     setShuffleSeed((current) => current + 3);
   }
 
+  async function handleLoginSubmit(event) {
+    event.preventDefault();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      setAuthStatus('先输入邮箱，我再给你发登录链接。');
+      return;
+    }
+
+    setAuthBusy(true);
+    setAuthStatus('正在发送登录链接...');
+
+    try {
+      await sendLoginLink(trimmedEmail);
+      setAuthStatus('登录链接已发送，去邮箱点一下就能回来。');
+    } catch (error) {
+      setAuthStatus(error.message || '发送失败，稍后再试一次。');
+    } finally {
+      setAuthBusy(false);
+    }
+  }
+
+  async function handleSignOut() {
+    setAuthBusy(true);
+    setAuthStatus('');
+
+    try {
+      await signOut();
+      setUser(null);
+      setPreferenceStatus('');
+    } catch (error) {
+      setAuthStatus(error.message || '退出失败，稍后再试一次。');
+    } finally {
+      setAuthBusy(false);
+    }
+  }
+
+  async function handleSavePreferences() {
+    if (!user) {
+      setAuthPanelOpen(true);
+      setPreferenceStatus('登录后就能保存偏好。');
+      return;
+    }
+
+    setPreferenceBusy(true);
+    setPreferenceStatus('正在保存你的偏好...');
+
+    try {
+      await saveUserPreferences(user.id, selections);
+      setPreferenceStatus('已保存，下次登录会自动恢复。');
+    } catch (error) {
+      setPreferenceStatus(error.message || '保存失败，稍后再试一次。');
+    } finally {
+      setPreferenceBusy(false);
+    }
+  }
+
   return (
     <main className="app-shell">
+      <div className="auth-bar" aria-label="账户状态">
+        {user ? (
+          <>
+            <span className="auth-email">{user.email}</span>
+            <button className="auth-button" type="button" onClick={handleSignOut} disabled={authBusy}>
+              <LogOut size={16} />
+              退出
+            </button>
+          </>
+        ) : (
+          <button
+            className="auth-button"
+            type="button"
+            onClick={() => setAuthPanelOpen(true)}
+            disabled={!isSupabaseConfigured}
+            title={isSupabaseConfigured ? '登录后可以保存偏好' : '配置 Supabase 后可登录'}
+          >
+            <LogIn size={16} />
+            {isSupabaseConfigured ? '登录' : '登录未配置'}
+          </button>
+        )}
+      </div>
+
       <section className="hero" aria-label="今晚吃什么推荐器">
         <img className="hero__art" src={heroImage} alt="可爱风格的晚餐食物拼贴" />
         <div className="hero__shade" />
@@ -350,6 +509,26 @@ function App() {
                 </fieldset>
               );
             })}
+          </div>
+
+          <div className="preference-actions">
+            <button
+              className="save-button"
+              type="button"
+              onClick={handleSavePreferences}
+              disabled={preferenceBusy || !isSupabaseConfigured}
+            >
+              <Save size={17} />
+              {preferenceBusy ? '保存中' : '保存偏好'}
+            </button>
+            <p>
+              {preferenceStatus ||
+                (!isSupabaseConfigured
+                  ? '配置 Supabase 后可以登录并保存偏好。'
+                  : user
+                    ? '保存后下次登录会自动带回这些选择。'
+                    : '登录后可以保存你的常用口味。')}
+            </p>
           </div>
         </div>
 
@@ -401,6 +580,49 @@ function App() {
           </div>
         </div>
       </section>
+
+      {authPanelOpen && (
+        <div className="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+          <div className="auth-card">
+            <div className="panel-heading">
+              <div>
+                <p className="eyebrow">ACCOUNT</p>
+                <h2 id="auth-title">邮箱登录</h2>
+              </div>
+              <button
+                className="icon-button"
+                type="button"
+                onClick={() => setAuthPanelOpen(false)}
+                aria-label="关闭登录窗口"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form className="auth-form" onSubmit={handleLoginSubmit}>
+              <label htmlFor="login-email">邮箱</label>
+              <input
+                id="login-email"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="you@example.com"
+                autoComplete="email"
+              />
+              <button className="reroll-button" type="submit" disabled={authBusy}>
+                <LogIn size={17} />
+                {authBusy ? '发送中' : '发送登录链接'}
+              </button>
+            </form>
+
+            <p className="auth-hint">
+              不用密码。点邮箱里的链接回来后，就能保存你的晚餐偏好。
+            </p>
+            {authStatus && <p className="form-status">{authStatus}</p>}
+            {!isSupabaseConfigured && <p className="form-status">当前还没配置 Supabase，登录暂不可用。</p>}
+          </div>
+        </div>
+      )}
     </main>
   );
 }

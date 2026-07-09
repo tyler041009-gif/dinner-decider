@@ -32,12 +32,79 @@ button {
 }
 
 .app-shell {
+  position: relative;
   min-height: 100vh;
   padding: 22px;
   background:
     radial-gradient(circle at 8% 12%, rgba(255, 209, 102, 0.34), transparent 28%),
     radial-gradient(circle at 92% 16%, rgba(94, 215, 181, 0.25), transparent 24%),
     linear-gradient(135deg, #fff8ed 0%, #fff1f3 48%, #eefdf7 100%);
+}
+
+.auth-bar {
+  position: absolute;
+  top: 38px;
+  right: 38px;
+  z-index: 5;
+  display: flex;
+  max-width: min(520px, calc(100% - 76px));
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.auth-email {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 9px 13px;
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  backdrop-filter: blur(14px);
+}
+
+.auth-button,
+.save-button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 850;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease,
+    opacity 160ms ease;
+}
+
+.auth-button {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  padding: 0 14px;
+  box-shadow: 0 14px 32px rgba(41, 51, 92, 0.18);
+}
+
+.auth-button:hover,
+.save-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(41, 51, 92, 0.18);
+}
+
+.auth-button:disabled,
+.save-button:disabled,
+.reroll-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+  transform: none;
 }
 
 .hero {
@@ -201,6 +268,30 @@ h2 {
 .filter-groups {
   display: grid;
   gap: 16px;
+}
+
+.preference-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+  border: 1px solid rgba(43, 34, 48, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 13px;
+}
+
+.save-button {
+  width: fit-content;
+  background: linear-gradient(135deg, var(--lemon), #ff8fab);
+  color: var(--ink);
+  padding: 0 14px;
+}
+
+.preference-actions p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 720;
+  line-height: 1.45;
 }
 
 .filter-group {
@@ -402,6 +493,70 @@ h2 {
   line-height: 1.45;
 }
 
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(43, 34, 48, 0.46);
+  backdrop-filter: blur(10px);
+}
+
+.auth-card {
+  width: min(100%, 430px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.auth-form {
+  display: grid;
+  gap: 10px;
+}
+
+.auth-form label {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 820;
+}
+
+.auth-form input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid rgba(43, 34, 48, 0.14);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  padding: 0 12px;
+  outline: none;
+}
+
+.auth-form input:focus {
+  border-color: rgba(179, 77, 213, 0.42);
+  box-shadow: 0 0 0 4px rgba(179, 77, 213, 0.11);
+}
+
+.auth-hint,
+.form-status {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.form-status {
+  border-radius: 8px;
+  background: #eefdf7;
+  color: #22614e;
+  padding: 10px;
+}
+
 @keyframes cardIn {
   from {
     opacity: 0;
@@ -433,6 +588,20 @@ h2 {
 @media (max-width: 720px) {
   .app-shell {
     padding: 12px;
+  }
+
+  .auth-bar {
+    position: relative;
+    top: auto;
+    right: auto;
+    max-width: none;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+
+  .auth-email {
+    color: var(--navy);
+    background: rgba(255, 255, 255, 0.82);
   }
 
   .hero {
@@ -474,6 +643,10 @@ h2 {
 
   .food-card {
     min-height: 0;
+  }
+
+  .auth-card {
+    padding: 16px;
   }
 }
 
