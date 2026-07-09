@@ -53,6 +53,16 @@ const foodImages = {
   'northeast-dumplings': new URL('./assets/foods/northeast-dumplings.png', import.meta.url).href,
   'veggie-quinoa-tofu': new URL('./assets/foods/veggie-quinoa-tofu.png', import.meta.url).href,
   'seafood-paella': new URL('./assets/foods/seafood-paella.png', import.meta.url).href,
+  'hainanese-chicken-rice': new URL('./assets/foods/hainanese-chicken-rice.png', import.meta.url).href,
+  'laksa-noodles': new URL('./assets/foods/laksa-noodles.png', import.meta.url).href,
+  'meatball-pasta': new URL('./assets/foods/meatball-pasta.png', import.meta.url).href,
+  'katsu-curry-rice': new URL('./assets/foods/katsu-curry-rice.png', import.meta.url).href,
+  'braised-pork-rice': new URL('./assets/foods/braised-pork-rice.png', import.meta.url).href,
+  'dim-sum-basket': new URL('./assets/foods/dim-sum-basket.png', import.meta.url).href,
+  'army-stew': new URL('./assets/foods/army-stew.png', import.meta.url).href,
+  'moroccan-tagine': new URL('./assets/foods/moroccan-tagine.png', import.meta.url).href,
+  'poke-bowl': new URL('./assets/foods/poke-bowl.png', import.meta.url).href,
+  'wonton-soup': new URL('./assets/foods/wonton-soup.png', import.meta.url).href,
 };
 
 function hydrateDinnerOptions(options) {
@@ -161,6 +171,16 @@ const diverseOptionIds = new Set([
   'northeast-dumplings',
   'veggie-quinoa-tofu',
   'seafood-paella',
+  'hainanese-chicken-rice',
+  'laksa-noodles',
+  'meatball-pasta',
+  'katsu-curry-rice',
+  'braised-pork-rice',
+  'dim-sum-basket',
+  'army-stew',
+  'moroccan-tagine',
+  'poke-bowl',
+  'wonton-soup',
 ]);
 
 function getMatchScore(option, selections) {

@@ -892,5 +892,247 @@
     "reason": "一整条鱼加配菜很有存在感，适合想吃热闹、重口、能分享的一顿。",
     "tips": "选香辣或蒜香口味更稳，配豆皮、土豆和青菜，主食最后再加。",
     "image": "grilled-fish"
+  },
+  {
+    "id": "hainanese-chicken-rice",
+    "name": "海南鸡饭",
+    "category": "东南亚饭食",
+    "scene": "both",
+    "budget": "medium",
+    "moods": [
+      "comfort",
+      "fresh",
+      "lazy"
+    ],
+    "flavors": [
+      "fresh",
+      "light"
+    ],
+    "groupSizes": [
+      "solo",
+      "couple"
+    ],
+    "hungerLevel": "normal",
+    "reason": "鸡肉、米饭和蘸酱组合很稳，清爽但不寡淡，适合想认真吃一顿又不想太重口。",
+    "tips": "外卖优先选鸡饭分装，辣酱和姜蓉都要一点，味道会更完整。",
+    "image": "hainanese-chicken-rice"
+  },
+  {
+    "id": "laksa-noodles",
+    "name": "新加坡叻沙",
+    "category": "南洋粉面",
+    "scene": "both",
+    "budget": "medium",
+    "moods": [
+      "comfort",
+      "spicy",
+      "reward"
+    ],
+    "flavors": [
+      "spicy",
+      "savory",
+      "fresh"
+    ],
+    "groupSizes": [
+      "solo",
+      "couple"
+    ],
+    "hungerLevel": "normal",
+    "reason": "椰香汤底、米粉和虾很有满足感，想吃一点特别的热汤面时很合适。",
+    "tips": "怕腻就加青菜或豆芽，外卖到手先拌匀汤底再吃。",
+    "image": "laksa-noodles"
+  },
+  {
+    "id": "meatball-pasta",
+    "name": "番茄肉丸意面",
+    "category": "意餐",
+    "scene": "delivery",
+    "budget": "medium",
+    "moods": [
+      "comfort",
+      "lazy",
+      "reward"
+    ],
+    "flavors": [
+      "savory",
+      "fresh"
+    ],
+    "groupSizes": [
+      "solo",
+      "couple"
+    ],
+    "hungerLevel": "normal",
+    "reason": "番茄酸甜和肉丸很友好，不太冒险，也比普通盖饭更有换口味的感觉。",
+    "tips": "选宽面或加一份沙拉，饱腹感和清爽度会更平衡。",
+    "image": "meatball-pasta"
+  },
+  {
+    "id": "katsu-curry-rice",
+    "name": "日式咖喱猪排饭",
+    "category": "日式简餐",
+    "scene": "both",
+    "budget": "medium",
+    "moods": [
+      "comfort",
+      "reward",
+      "lazy"
+    ],
+    "flavors": [
+      "savory",
+      "sweet"
+    ],
+    "groupSizes": [
+      "solo",
+      "couple"
+    ],
+    "hungerLevel": "very",
+    "reason": "咖喱、炸猪排和米饭是扎实三件套，特别适合已经很饿又想吃点快乐的时候。",
+    "tips": "外卖备注咖喱分装，猪排到手会更脆；很饿可以加蛋。",
+    "image": "katsu-curry-rice"
+  },
+  {
+    "id": "braised-pork-rice",
+    "name": "台式卤肉饭",
+    "category": "台式简餐",
+    "scene": "delivery",
+    "budget": "low",
+    "moods": [
+      "comfort",
+      "lazy",
+      "quiet"
+    ],
+    "flavors": [
+      "savory",
+      "sweet"
+    ],
+    "groupSizes": [
+      "solo"
+    ],
+    "hungerLevel": "normal",
+    "reason": "卤汁拌饭简单直接，便宜、稳定、下饭，是工作日晚上很安心的选择。",
+    "tips": "加卤蛋和青菜最划算，想清爽一点就配海带汤或小黄瓜。",
+    "image": "braised-pork-rice"
+  },
+  {
+    "id": "dim-sum-basket",
+    "name": "广式点心拼笼",
+    "category": "粤式点心",
+    "scene": "dine-in",
+    "budget": "medium",
+    "moods": [
+      "social",
+      "fresh",
+      "reward"
+    ],
+    "flavors": [
+      "fresh",
+      "savory",
+      "light"
+    ],
+    "groupSizes": [
+      "couple",
+      "group"
+    ],
+    "hungerLevel": "light",
+    "reason": "虾饺、烧卖、肠粉可以少量多样，适合两三个人想边聊边吃。",
+    "tips": "别只点主食，蒸点、煎点和青菜各来一点，体验更完整。",
+    "image": "dim-sum-basket"
+  },
+  {
+    "id": "army-stew",
+    "name": "韩式部队锅",
+    "category": "韩餐锅物",
+    "scene": "dine-in",
+    "budget": "high",
+    "moods": [
+      "social",
+      "spicy",
+      "comfort"
+    ],
+    "flavors": [
+      "spicy",
+      "savory"
+    ],
+    "groupSizes": [
+      "couple",
+      "group"
+    ],
+    "hungerLevel": "very",
+    "reason": "热锅、拉面、午餐肉和泡菜很适合分享，氛围比单点外卖更热闹。",
+    "tips": "两个人点小锅就够，最后再加拉面或芝士，别一开始就把主食点满。",
+    "image": "army-stew"
+  },
+  {
+    "id": "moroccan-tagine",
+    "name": "摩洛哥鹰嘴豆塔吉锅",
+    "category": "中东北非素食",
+    "scene": "both",
+    "budget": "medium",
+    "moods": [
+      "fresh",
+      "quiet",
+      "comfort"
+    ],
+    "flavors": [
+      "savory",
+      "fresh",
+      "light"
+    ],
+    "groupSizes": [
+      "solo",
+      "couple"
+    ],
+    "hungerLevel": "normal",
+    "reason": "鹰嘴豆、蔬菜和香料很有层次，适合想换口味但不想吃太油的晚上。",
+    "tips": "配 couscous 或饼更抗饿，想吃肉的人可以加鸡肉版本。",
+    "image": "moroccan-tagine"
+  },
+  {
+    "id": "poke-bowl",
+    "name": "夏威夷波奇饭",
+    "category": "轻食饭碗",
+    "scene": "delivery",
+    "budget": "medium",
+    "moods": [
+      "fresh",
+      "quiet",
+      "reward"
+    ],
+    "flavors": [
+      "fresh",
+      "light"
+    ],
+    "groupSizes": [
+      "solo",
+      "couple"
+    ],
+    "hungerLevel": "light",
+    "reason": "鱼肉、米饭、牛油果和蔬菜颜色丰富，适合想吃清爽又有仪式感的一餐。",
+    "tips": "酱汁单独放，蛋白质加量比额外加饭更适合晚餐。",
+    "image": "poke-bowl"
+  },
+  {
+    "id": "wonton-soup",
+    "name": "上海小馄饨汤",
+    "category": "江南汤点",
+    "scene": "both",
+    "budget": "low",
+    "moods": [
+      "comfort",
+      "quiet",
+      "lazy"
+    ],
+    "flavors": [
+      "light",
+      "fresh"
+    ],
+    "groupSizes": [
+      "solo",
+      "couple"
+    ],
+    "hungerLevel": "light",
+    "reason": "热汤和小馄饨很温柔，适合不想吃太撑、但又想胃里有点暖意的晚上。",
+    "tips": "轻轻吃就单点，正常饿可以加一份葱油拌面或生煎。",
+    "image": "wonton-soup"
   }
 ]
