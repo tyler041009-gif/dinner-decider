@@ -400,7 +400,7 @@ function App() {
       setEmail(trimmedEmail);
       setAuthStep('code');
       setLoginCode('');
-      setAuthStatus('验证码已发送，去邮箱查看 6 位数字。');
+      setAuthStatus('验证码已发送，去邮箱查看那串数字。');
     } catch (error) {
       setAuthStatus(error.message || '发送失败，稍后再试一次。');
     } finally {
@@ -414,7 +414,7 @@ function App() {
     const trimmedCode = loginCode.trim();
 
     if (!trimmedCode) {
-      setAuthStatus('请输入邮箱里的 6 位验证码。');
+      setAuthStatus('请输入邮箱里的验证码。');
       return;
     }
 
@@ -668,17 +668,17 @@ function App() {
                   <span>验证码已发送至</span>
                   <strong>{email}</strong>
                 </div>
-                <label htmlFor="login-code">6 位验证码</label>
+                <label htmlFor="login-code">邮箱验证码</label>
                 <input
                   className="code-input"
                   id="login-code"
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
-                  maxLength={6}
+                  maxLength={8}
                   value={loginCode}
-                  onChange={(event) => setLoginCode(event.target.value.replace(/\D/g, '').slice(0, 6))}
-                  placeholder="000000"
+                  onChange={(event) => setLoginCode(event.target.value.replace(/\D/g, '').slice(0, 8))}
+                  placeholder="00000000"
                   autoComplete="one-time-code"
                 />
                 <button className="reroll-button" type="submit" disabled={authBusy}>
@@ -696,7 +696,7 @@ function App() {
               </form>
             )}
 
-            <p className="auth-hint">不用密码。输入邮箱里的 6 位验证码，就能保存你的晚餐偏好。</p>
+            <p className="auth-hint">不用密码。输入邮箱里的验证码，就能保存你的晚餐偏好。</p>
             {authStatus && <p className="form-status">{authStatus}</p>}
             {!isSupabaseConfigured && <p className="form-status">当前还没配置 Supabase，登录暂不可用。</p>}
           </div>
