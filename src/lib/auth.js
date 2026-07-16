@@ -21,20 +21,32 @@ export function listenToAuthChanges(onChange) {
   return () => subscription.unsubscribe();
 }
 
-export async function sendLoginLink(email) {
+export async function sendLoginCode(email) {
   if (!isSupabaseConfigured) {
     throw new Error('Supabase 还没有配置，暂时不能登录。');
   }
 
-  const redirectTo = new URL(import.meta.env.BASE_URL, window.location.origin).href;
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: {
-      emailRedirectTo: redirectTo,
-    },
   });
 
   if (error) throw error;
+}
+
+export async function verifyLoginCode(email, token) {
+  if (!isSupabaseConfigured) {
+    throw new Error('Supabase 还没有配置，暂时不能登录。');
+  }
+
+  const { data, error } = await supabase.auth.verifyOtp({
+    email,
+    token,
+    type: 'email',
+  });
+
+  if (error) throw error;
+
+  return data.user ?? null;
 }
 
 export async function signOut() {

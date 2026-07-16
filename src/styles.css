@@ -541,6 +541,56 @@ h2 {
   box-shadow: 0 0 0 4px rgba(179, 77, 213, 0.11);
 }
 
+.code-summary {
+  display: grid;
+  gap: 3px;
+  border: 1px solid rgba(94, 215, 181, 0.26);
+  border-radius: 8px;
+  background: #eefdf7;
+  padding: 10px;
+  color: #22614e;
+  font-size: 0.88rem;
+  font-weight: 720;
+}
+
+.code-summary strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--navy);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-form .code-input {
+  min-height: 54px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.auth-secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.auth-secondary-actions button {
+  min-height: 38px;
+  border: 1px solid rgba(43, 34, 48, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--navy);
+  cursor: pointer;
+  font-weight: 820;
+  padding: 0 12px;
+}
+
+.auth-secondary-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
 .auth-hint,
 .form-status {
   margin-top: 12px;

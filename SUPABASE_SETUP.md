@@ -28,19 +28,32 @@
 
 在 Supabase 后台进入 Authentication -> Providers，确认 Email 已开启。
 
-再进入 Authentication -> URL Configuration：
+再进入 Authentication -> Email Templates，打开 Magic Link 模板，确认邮件正文里包含验证码变量：
+
+```text
+{{ .Token }}
+```
+
+可以把邮件文案改成类似：
+
+```text
+你的“今晚吃什么”登录验证码是：{{ .Token }}
+```
+
+这个项目使用“输入验证码”的登录方式，不需要用户点击邮件链接。
+
+最后进入 Authentication -> URL Configuration，保留基础站点地址：
 
 ```text
 Site URL:
 https://dinner-decider-sage.vercel.app
 
 Redirect URLs:
-http://localhost:5173/dinner-decider/
 https://dinner-decider-sage.vercel.app
 https://dinner-decider-sage.vercel.app/
 ```
 
-如果以后换了 Vercel 域名，把上面的线上地址也换成新域名。
+验证码登录不依赖 Redirect URLs，但建议保留线上域名配置。如果以后换了 Vercel 域名，把上面的线上地址也换成新域名。
 
 ## 4. 配置环境变量
 

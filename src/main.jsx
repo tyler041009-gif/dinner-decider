@@ -22,8 +22,9 @@ import {
   listenToAuthChanges,
   loadUserPreferences,
   saveUserPreferences,
-  sendLoginLink,
+  sendLoginCode,
   signOut,
+  verifyLoginCode,
 } from './lib/auth';
 import { loadDinnerOptions } from './lib/dinnerOptions';
 import { isSupabaseConfigured } from './lib/supabase';
@@ -285,7 +286,9 @@ function App() {
   const [dataSource, setDataSource] = useState('loading');
   const [user, setUser] = useState(null);
   const [authPanelOpen, setAuthPanelOpen] = useState(false);
+  const [authStep, setAuthStep] = useState('email');
   const [email, setEmail] = useState('');
+  const [loginCode, setLoginCode] = useState('');
   const [authStatus, setAuthStatus] = useState('');
   const [authBusy, setAuthBusy] = useState(false);
   const [preferenceStatus, setPreferenceStatus] = useState('');
@@ -323,6 +326,8 @@ function App() {
       setUser(currentUser);
       if (currentUser) {
         setAuthPanelOpen(false);
+        setLoginCode('');
+        setAuthStep('email');
         setAuthStatus('');
       } else {
         setPreferenceStatus('');
@@ -383,21 +388,63 @@ function App() {
     const trimmedEmail = email.trim();
 
     if (!trimmedEmail) {
-      setAuthStatus('先输入邮箱，我再给你发登录链接。');
+      setAuthStatus('先输入邮箱，我再给你发验证码。');
       return;
     }
 
     setAuthBusy(true);
-    setAuthStatus('正在发送登录链接...');
+    setAuthStatus('正在发送验证码...');
 
     try {
-      await sendLoginLink(trimmedEmail);
-      setAuthStatus('登录链接已发送，去邮箱点一下就能回来。');
+      await sendLoginCode(trimmedEmail);
+      setEmail(trimmedEmail);
+      setAuthStep('code');
+      setLoginCode('');
+      setAuthStatus('验证码已发送，去邮箱查看 6 位数字。');
     } catch (error) {
       setAuthStatus(error.message || '发送失败，稍后再试一次。');
     } finally {
       setAuthBusy(false);
     }
+  }
+
+  async function handleCodeSubmit(event) {
+    event.preventDefault();
+    const trimmedEmail = email.trim();
+    const trimmedCode = loginCode.trim();
+
+    if (!trimmedCode) {
+      setAuthStatus('请输入邮箱里的 6 位验证码。');
+      return;
+    }
+
+    setAuthBusy(true);
+    setAuthStatus('正在验证...');
+
+    try {
+      const verifiedUser = await verifyLoginCode(trimmedEmail, trimmedCode);
+      setUser(verifiedUser);
+      setAuthPanelOpen(false);
+      setLoginCode('');
+      setAuthStep('email');
+      setAuthStatus('');
+    } catch (error) {
+      setAuthStatus(error.message || '验证码不对或已过期，请重新输入。');
+    } finally {
+      setAuthBusy(false);
+    }
+  }
+
+  function closeAuthPanel() {
+    setAuthPanelOpen(false);
+    setLoginCode('');
+    setAuthStatus('');
+  }
+
+  function changeLoginEmail() {
+    setAuthStep('email');
+    setLoginCode('');
+    setAuthStatus('');
   }
 
   async function handleSignOut() {
@@ -592,32 +639,64 @@ function App() {
               <button
                 className="icon-button"
                 type="button"
-                onClick={() => setAuthPanelOpen(false)}
+                onClick={closeAuthPanel}
                 aria-label="关闭登录窗口"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <form className="auth-form" onSubmit={handleLoginSubmit}>
-              <label htmlFor="login-email">邮箱</label>
-              <input
-                id="login-email"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="you@example.com"
-                autoComplete="email"
-              />
-              <button className="reroll-button" type="submit" disabled={authBusy}>
-                <LogIn size={17} />
-                {authBusy ? '发送中' : '发送登录链接'}
-              </button>
-            </form>
+            {authStep === 'email' ? (
+              <form className="auth-form" onSubmit={handleLoginSubmit}>
+                <label htmlFor="login-email">邮箱</label>
+                <input
+                  id="login-email"
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                />
+                <button className="reroll-button" type="submit" disabled={authBusy}>
+                  <LogIn size={17} />
+                  {authBusy ? '发送中' : '发送验证码'}
+                </button>
+              </form>
+            ) : (
+              <form className="auth-form" onSubmit={handleCodeSubmit}>
+                <div className="code-summary">
+                  <span>验证码已发送至</span>
+                  <strong>{email}</strong>
+                </div>
+                <label htmlFor="login-code">6 位验证码</label>
+                <input
+                  className="code-input"
+                  id="login-code"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={6}
+                  value={loginCode}
+                  onChange={(event) => setLoginCode(event.target.value.replace(/\D/g, '').slice(0, 6))}
+                  placeholder="000000"
+                  autoComplete="one-time-code"
+                />
+                <button className="reroll-button" type="submit" disabled={authBusy}>
+                  <LogIn size={17} />
+                  {authBusy ? '验证中' : '确认登录'}
+                </button>
+                <div className="auth-secondary-actions">
+                  <button type="button" onClick={handleLoginSubmit} disabled={authBusy}>
+                    重新发送
+                  </button>
+                  <button type="button" onClick={changeLoginEmail} disabled={authBusy}>
+                    换邮箱
+                  </button>
+                </div>
+              </form>
+            )}
 
-            <p className="auth-hint">
-              不用密码。点邮箱里的链接回来后，就能保存你的晚餐偏好。
-            </p>
+            <p className="auth-hint">不用密码。输入邮箱里的 6 位验证码，就能保存你的晚餐偏好。</p>
             {authStatus && <p className="form-status">{authStatus}</p>}
             {!isSupabaseConfigured && <p className="form-status">当前还没配置 Supabase，登录暂不可用。</p>}
           </div>
